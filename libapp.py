@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 # all the imports
 from __future__ import with_statement
 from contextlib import closing
@@ -174,7 +175,7 @@ def add_entry(view):
 			entry = Author(str(form.name.data))
 		db_session.add(entry)
 		db_session.commit()		
-		flash('%s successfuly added' % repr(entry))
+		flash('%s successfuly added' % entry.name)
 		return redirect(url_for('admin_show_entries',pagin = app.config['PAGIN'], page=1, view=view))
 	flash('Add new entry to %s database' % view)
 	return render_template('add_entry.html', form=form, view=view,mode='add')
@@ -192,7 +193,7 @@ def edit_entry(view, id):
 			entry.name = form.name.data
 			entry.description = form.description.data
 		db_session.commit()		
-		flash('%s successfuly have edited' % repr(entry))
+		flash('%s successfuly have edited' % entry.name)
 		return redirect(url_for('admin_show_entries',pagin = app.config['PAGIN'], page=1, view=view))
 	flash('edited  entry to %s database' % view)
 	return render_template('add_entry.html', form=form, view=view,entry=entry, mode="edit")
@@ -208,7 +209,7 @@ def del_entry(view,id):
 	if entry:
 		db_session.delete(entry)
 		db_session.commit()		
-		flash('%s successfuly removed from database' % repr(entry))
+		flash('%s successfuly removed from database' % entry.name)
 	else:
 		flash('No entry with id = %d' % id)
 	return redirect(url_for('admin_show_entries',pagin = app.config['PAGIN'], page=1, view=view))

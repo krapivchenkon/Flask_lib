@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 from wtforms import Form, BooleanField, TextField, validators, FieldList, IntegerField,TextAreaField,Field
 from wtforms.widgets import TextInput 
 

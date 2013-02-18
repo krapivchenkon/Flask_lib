@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from sqlalchemy import Column, Integer, String, Sequence, Table, ForeignKey
 from sqlalchemy.orm import relationship, backref
 from db import Base
