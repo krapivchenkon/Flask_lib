@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+{% if search_for %}
+	<div class=search_for>Search results for: <b>{{ search_for }}</b> ..</div>
+{% endif %}
+<div>
+<ul class=search_results>
+	{% for key in results_dict.keys() %}  
+	  {% if results_dict[key] %}	
+	    <h5>{{ key }}</h5>
+		{% for entry in results_dict[key] %}  		
+		<li class="{{ loop.cycle('even', 'odd') }}">
+			<span>{{ loop.index }}.</span>
+				<a href="{{ url_for('show_entry',item_id=entry.id,view=entry.__url__) }}">{{ entry.name }}</a>
+			</li>
+			{% endfor %}
+	  {% endif %}
+	{% endfor %}
+		</ul> 
+</div>
+  {% endblock %}
+  

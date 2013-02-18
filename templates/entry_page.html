@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+  <ul class=entries>
+	{% if view_mode == 'author' %}
+	  <li><h2>{{ entry.name }}</h2>
+		<h6>{% for book in entry.books %}  
+		<a href="{{ url_for('show_entry',item_id=book.id,view='book') }}">{{ book.name }}</a>
+			{% if not loop.last %}, {% endif %}
+			{% endfor %}</h6>
+
+	{% else %}	
+	  <li><h2>{{ entry.name }}</h2>
+		<h6>{% for author in entry.authors %}  
+			<a href="{{ url_for('show_entry',item_id=author.id,view='author') }}">{{ author.name }}</a>
+			{% if not loop.last %}, {% endif %}
+		{% endfor %}</h6>
+		<div class=description>{{ entry.description }}</div>
+	{% endif %}
+	</li></ul>
+	
+{% endblock %}
+
+

@@ -1,0 +1,14 @@
+{% extends "admin_layout.html" %}
+{% from "_formhelpers.html" import render_field %}
+{% block body %}
+<form method="POST" action="/admin/{{ view }}{% if mode=='add'%}/add/{% else %}/edit/{{ entry.id }}/{% endif %}">
+    <div> {{ render_field(form.name) }}</div>
+	{% if view == 'books' %}	
+	<div>
+		<dt><label for="authors">Authors</label>
+	       	{{ render_field(form.authors) }}</div>
+ 	 <div> {{ render_field(form.description) }}</div>
+	{% endif %}
+    <p><input type=submit value=add></p>
+</form>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "admin_layout.html" %}
+{% from "_formhelpers.html" import render_field %}
+{% block body %}
+<table>
+	
+	  {% if view_mode == 'books' %}
+	  <thead>
+		  <tr><th style="width:5em;">id</th><th>
+		    Book(<a class="button-add" href="{{ url_for('add_entry',view='books') }}">add</a>)
+		  </th><th>Author</th></tr>
+	  </thead>
+	  <tbody>
+	  {% for entry in entries %}
+	  <tr>	  <th><a href="{{ url_for('show_entry',item_id=entry.id,view=view_mode[:-1]) }}">{{ entry.id }}</a>
+		  <a class="actbutton remove" href="{{ url_for('del_entry',view='books',id=entry.id) }}"></a>
+		  <a class="actbutton change" href="{{ url_for('edit_entry',view='books',id=entry.id) }}"></a>
+		  </th>
+
+		  <td>{{ entry.name }}</td>
+		  <td>{% for author in entry.authors %}  
+				<a href="{{ url_for('show_entry',item_id=author.id,view='author') }}">{{ author.name }}</a>
+					{% if not loop.last %}, {% endif %}
+			{% endfor %}</td></tr>
+	  {% endfor %}
+	  {% else %}
+  	  <thead>
+		  <tr><th style="width:4em;">id</th><th>
+		    Author(<a class="button-add" href="{{ url_for('add_entry',view='authors') }}">add</a>)</th></tr>
+	  </thead>
+	  <tbody>
+ 	  {% for entry in entries %}
+	  <tr><th><a href="{{ url_for('show_entry',item_id=entry.id,view=view_mode[:-1]) }}">{{ entry.id }}</a>
+  		  <a class="actbutton remove" href="{{ url_for('del_entry',view='authors',id=entry.id) }}"></a>
+		  </th>
+		  <td id="{{ entry.id }}" name="Author" class=edit>{{ entry.name }}</td></tr>
+	  {% endfor %}
+	
+
+	  {% endif %}
+  </tbody>  
+  </table>
+	<div class="pagination">
+	  <span class="step-links">
+          {% if entries.has_previous() %}
+		<a class=pages href="{{ url_for('admin_show_entries',pagin=entries_per_page,page=entries.previous_page_number(),view=view_mode) }}">prev</a>
+ 	  {% endif %}
+          <a class="pages" href="#">{{ entries.number }} of {{ entries.paginator.num_pages }}</a>
+          {% if entries.has_next() %}
+	  <a class=pages href="{{ url_for('admin_show_entries',pagin=entries_per_page,page=entries.next_page_number(),view=view_mode) }}">next</a> 
+          {% endif %}
+        </span>
+      </div>
+{% endblock %}
+
+
